@@ -1,8 +1,19 @@
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  app.enableCors();
+
+  const config = new DocumentBuilder()
+    .setTitle('WSpeedrun Game Service')
+    .setDescription('Game and run category API')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  SwaggerModule.setup('', app, SwaggerModule.createDocument(app, config));
+
+  await app.listen(process.env.PORT ?? 3001);
 }
-bootstrap();
+void bootstrap();

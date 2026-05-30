@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Run {
+  run_id          String    @id @db.VarChar(36)
+  run_category_id String    @db.VarChar(36)
+  user_id         String    @db.VarChar(36)
+  vod_url         String    @db.VarChar(255)
+  run_duration    BigInt
+  submitted_at    DateTime  @default(now())
+  verified_at     DateTime?
+  status          String    @default("PENDING") @db.VarChar(25)
+
+  comments Comment[]
+
+  @@map("runs")
+}
+
+model Comment {
+  comment_id String   @id @db.VarChar(36)
+  run_id     String   @db.VarChar(36)
+  user_id    String   @db.VarChar(36)
+  comment    String   @db.VarChar(255)
+  created_at DateTime @default(now())
+
+  run Run @relation(fields: [run_id], references: [run_id], onDelete: Cascade)
+
+  @@map("comments")
+}

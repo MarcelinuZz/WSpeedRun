@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  game_id     String        @id @db.VarChar(36)
+  game_name   String        @db.VarChar(255)
+  description String        @db.VarChar(255)
+
+  runCategories RunCategory[]
+
+  @@map("games")
+}
+
+model RunCategory {
+  run_category_id   String @id @db.VarChar(36)
+  game_id           String @db.VarChar(36)
+  run_category_name String @db.VarChar(255)
+
+  game Game @relation(fields: [game_id], references: [game_id], onDelete: Cascade)
+
+  @@map("run_categories")
+}
