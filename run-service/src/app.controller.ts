@@ -68,7 +68,7 @@ export class AppController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, AdminGuard)
-  @Get('admin/runs/:status')
+  @Get('admin/runss/:status')
   adminRunsByStatus(@Param('status') status: string) {
     return this.appService.adminRunsByStatus(status);
   }

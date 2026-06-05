@@ -100,7 +100,6 @@ let AppService = class AppService {
         const user = await this.prisma.user.findUnique({
             where: { user_id: id },
             select: {
-                user_id: true,
                 username: true,
                 email: true,
                 country: true,

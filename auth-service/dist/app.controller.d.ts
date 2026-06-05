@@ -10,9 +10,8 @@ export declare class AppController {
         access_token: string;
     }>;
     profile(id: string): Promise<{
-        user_id: string;
-        email: string;
         username: string;
+        email: string;
         country: string;
         role: string;
     }>;
